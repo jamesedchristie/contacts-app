@@ -5,7 +5,7 @@ import { Styles } from '../Styles';
 export default function DeleteContactView({ navigation, route }) {
     const { person, depts } = route.params;
     const deleteContact = () => {
-        fetch('http://localhost:50917/ContactsCRUD.asmx/DeleteContact',
+        fetch('http://localhost:55851/ContactsCRUD.asmx/DeleteContact',
             {
                 method: 'POST',
                 headers: {

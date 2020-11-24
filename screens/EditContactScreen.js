@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Button, TextInput, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, Button, TextInput, Image, ImageBackground, TouchableOpacity, Picker } from 'react-native';
 import { Styles } from '../Styles';
 
 export default function EditContactView({ navigation, route }) {
@@ -12,9 +12,10 @@ export default function EditContactView({ navigation, route }) {
     const [state, setState] = useState(person.State);
     const [zip, setZip] = useState(person.ZIP);
     const [country, setCountry] = useState(person.Country);
+    const options = depts.map((d, i) => (<Picker.Item label={d} value={i} />));
 
     const saveContact = () => {
-        fetch('http://localhost:50917/ContactsCRUD.asmx/UpdateContact',
+        fetch('http://localhost:55851/ContactsCRUD.asmx/UpdateContact',
             {
                 method: 'POST',
                 headers: {
@@ -55,7 +56,9 @@ export default function EditContactView({ navigation, route }) {
                     </View>
                     <View style={Styles.contactAttribute}>
                         <Text style={Styles.contactKey}>Department: </Text>
-                        <TextInput style={Styles.contactInput} value={dept} placeholder="Department" onChangeText={(text) => setDept(parseInt(text))} />
+                        <Picker style={Styles.contactInput} selectedValue={dept} onValueChange={(itemValue, itemIndex) => setDept(itemValue)}>
+                            {options}
+                        </Picker>
                     </View>
                     <View style={Styles.contactAttribute}>
                         <Text style={Styles.contactKey}>Address</Text>

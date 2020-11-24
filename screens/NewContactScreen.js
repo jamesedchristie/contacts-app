@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Button, TextInput, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native'
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, Button, TextInput, Image, ImageBackground, TouchableOpacity, Picker } from 'react-native';
 import { Styles } from '../Styles'
 
 export default function NewContactView({ navigation }) {
@@ -11,9 +12,25 @@ export default function NewContactView({ navigation }) {
     const [state, setState] = useState('');
     const [zip, setZip] = useState('');
     const [country, setCountry] = useState('');
+    const [depts, setDepts] = useState([]);
+
+    useFocusEffect(
+        useCallback(() => {          
+            fetch('http://localhost:55851/ContactsCRUD.asmx/GetDepartments',
+                {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then((response) => response.json())
+                .then((json) => setDepts(json.d))
+                .catch((error) => console.error(error))
+        }, [])
+    );
 
     const saveContact = () => {
-        fetch('http://localhost:50917/ContactsCRUD.asmx/InsertNewContact',
+        fetch('http://localhost:55851/ContactsCRUD.asmx/InsertNewContact',
             {
                 method: 'POST',
                 headers: {
@@ -35,6 +52,8 @@ export default function NewContactView({ navigation }) {
             .then(() => navigation.navigate('AllContacts'))
     }
 
+    const options = depts.map((d, i) => (<Picker.Item label={d} value={i} />));
+
     return (
         <View style={Styles.container}>
             <ImageBackground source={require('../assets/ROI_bg_charcoal.jpg')} style={Styles.header}>
@@ -53,7 +72,9 @@ export default function NewContactView({ navigation }) {
                     </View>
                     <View style={Styles.contactAttribute}>
                         <Text style={Styles.contactKey}>Department: </Text>
-                        <TextInput style={Styles.contactInput} value={dept} placeholder="Department" onChangeText={(text) => setDept(parseInt(text))} />
+                        <Picker style={Styles.contactInput} selectedValue={dept} onValueChange={(itemValue, itemIndex) => setDept(itemValue)}>
+                            {options}
+                        </Picker>
                     </View>
                     <View style={Styles.contactAttribute}>
                         <Text style={Styles.contactKey}>Address</Text>

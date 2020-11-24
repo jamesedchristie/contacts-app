@@ -10,7 +10,7 @@ export default function AllContactsView({ navigation }) {
 
     useFocusEffect(
         useCallback(() => {
-            fetch('http://localhost:50917/ContactsCRUD.asmx/GetContacts',
+            fetch('http://localhost:55851/ContactsCRUD.asmx/GetContacts',
                 {
                     headers: {
                         Accept: 'application/json',
@@ -22,7 +22,7 @@ export default function AllContactsView({ navigation }) {
                 .catch((error) => console.error(error));
 
 
-            fetch('http://localhost:50917/ContactsCRUD.asmx/GetDepartments',
+            fetch('http://localhost:55851/ContactsCRUD.asmx/GetDepartments',
                 {
                     headers: {
                         Accept: 'application/json',
