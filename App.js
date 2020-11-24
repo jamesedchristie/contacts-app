@@ -1,21 +1,29 @@
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import AllContactsView from './screens/AllContactsScreen';
+import ContactView from './screens/ContactScreen';
+import DeleteContactView from './screens/DeleteContactScreen';
+import EditContactView from './screens/EditContactScreen';
+import Home from './screens/HomeScreen';
+import NewContactView from './screens/NewContactScreen';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home}/>
+        <Stack.Screen name="AllContacts" component={AllContactsView}/>
+        <Stack.Screen name="Contact" component={ContactView}/>
+        <Stack.Screen name="NewContact" component={NewContactView}/>
+        <Stack.Screen name="EditContact" component={EditContactView}/>
+        <Stack.Screen name="DeleteContact" component={DeleteContactView}/>
+      </Stack.Navigator>
+    </NavigationContainer>   
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
