@@ -39,7 +39,6 @@ export default function AllContactsView({ navigation }) {
     return (
         <View style={Styles.container}>
             <ImageBackground source={require('../assets/ROI_bg_charcoal.jpg')} style={Styles.header}>
-                <Image source={require('../assets/ROI_logo_colour.jpg')} style={Styles.logo} />
                 <Text style={Styles.headerText}>All Contacts</Text>
                 <TouchableOpacity style={Styles.button} onPress={(e) => navigation.navigate('Home')}>
                     <Text style={Styles.buttonText}>Home</Text>

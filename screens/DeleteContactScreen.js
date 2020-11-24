@@ -22,8 +22,7 @@ export default function DeleteContactView({ navigation, route }) {
     return (
         <View style={Styles.container}>
             <ImageBackground source={require('../assets/ROI_bg_charcoal.jpg')} style={Styles.header}>
-                <Image source={require('../assets/ROI_logo_colour.jpg')} style={Styles.logo} />
-                <Text style={Styles.headerText}>Staff Contacts</Text>
+                <Text style={Styles.headerText}>Delete Contact</Text>
             </ImageBackground>
             <View style={Styles.body}>
                 <Text style={Styles.bodyText}>Are you sure you want to permanently delete staff member {person.Name}? This action cannot be undone.</Text>

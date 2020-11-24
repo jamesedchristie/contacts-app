@@ -20,7 +20,7 @@ export const Styles = StyleSheet.create({
     },
     headerText: {
         color: '#fff',
-        fontFamily: 'Trebuchet',
+        fontFamily: 'Calibri',
         fontSize: 21,
     },
     body: {
@@ -30,7 +30,7 @@ export const Styles = StyleSheet.create({
         alignItems: 'center'
     },
     bodyText: {
-        fontFamily: 'Trebuchet',
+        fontFamily: 'Calibri',
         fontSize: 18
     },
     button: {
@@ -44,7 +44,7 @@ export const Styles = StyleSheet.create({
     },
     buttonText: {
         color: '#fff',
-        fontFamily: 'Trebuchet',
+        fontFamily: 'Calibri',
         fontSize: 18,
     },
     contactList: {
@@ -77,34 +77,43 @@ export const Styles = StyleSheet.create({
         backgroundColor: 'rgba(247,247,247,1.0)',
     },
     contactDisplay: {
-        flex: 1,
+        alignSelf: 'stretch',
+        //justifyContent: 'space-evenly'        
     },
     contactAttribute: {
         alignSelf: 'stretch',
-        flex: 1,
         flexDirection: 'row',
+        flexWrap: 'wrap',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        margin: 10
+    },
+    contactAttributeEdit: {
+        alignSelf: 'stretch',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        margin: 10
     },
     contactKey: {
-        fontFamily: 'Trebuchet',
+        fontFamily: 'Calibri',
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#941a1d'
+        color: '#941a1d',
     },
     contactValue: {
-        fontFamily: 'Trebuchet',
+        fontFamily: 'Calibri',
         fontSize: 18,
     },
     contactInput: {
-        fontFamily: 'Trebuchet',
+        fontFamily: 'Calibri',
         fontSize: 18,
         backgroundColor: '#eee',
         borderRadius: 3,
         borderColor: '#262626',
         borderWidth: 1,
         margin: 10,
-        padding: 5
+        padding: 5,
     },
     footer: {
         flex: 1,
