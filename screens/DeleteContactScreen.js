@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Button, TextInput, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import React from 'react';
+import { Text, View, TouchableOpacity, ImageBackground } from 'react-native';
 import { Styles } from '../Styles';
 
 export default function DeleteContactView({ navigation, route }) {
@@ -17,7 +17,8 @@ export default function DeleteContactView({ navigation, route }) {
                 })
             })
             .then(() => alert('Contact information deleted successfully.'))
-            .then(() => navigation.navigate('AllContacts'));
+            .then(() => navigation.navigate('AllContacts'))
+            .catch(() => alert('An error occurred when connecting to the server. Please try again. If error persists please contact the IT Department.'));
     };
     return (
         <View style={Styles.container}>
@@ -25,9 +26,9 @@ export default function DeleteContactView({ navigation, route }) {
                 <Text style={Styles.headerText}>Delete Contact</Text>
             </ImageBackground>
             <View style={Styles.body}>
-                <Text style={Styles.bodyText}>Are you sure you want to permanently delete staff member {person.Name}? This action cannot be undone.</Text>
+                <Text style={[Styles.bodyText, { 'textAlign': 'center'}]}>Are you sure you want to permanently delete staff member <Text style={{ 'fontWeight': 'bold' }}>{person.Name}</Text>? <Text style={{ 'color': '#941a1d' }}>{'\n'}This action cannot be undone.</Text></Text>
                 <View style={Styles.footer}>
-                    <TouchableOpacity style={Styles.button} onPress={(e) => navigation.navigate('Contact', { person: person, depts: depts })}>
+                    <TouchableOpacity style={Styles.button} onPress={() => navigation.navigate('Contact', { person: person, depts: depts })}>
                         <Text style={Styles.buttonText}>Cancel</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={Styles.button} onPress={deleteContact}>

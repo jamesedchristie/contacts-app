@@ -4,6 +4,8 @@ export const Styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        color: '#262626',
+        fontFamily: 'trebuc',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -19,18 +21,19 @@ export const Styles = StyleSheet.create({
         height: 150 * 0.52,
     },
     headerText: {
-        color: '#fff',
-        fontFamily: 'Calibri',
+        color: '#fff',     
+        fontFamily: 'trebuc',        
         fontSize: 21,
     },
     body: {
         padding: 50,
-        flex: 6,
+        flex: 6,        
         alignSelf: 'stretch',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     bodyText: {
-        fontFamily: 'Calibri',
+        color: '#262626',
+        fontFamily: 'trebuc',
         fontSize: 18
     },
     button: {
@@ -43,8 +46,8 @@ export const Styles = StyleSheet.create({
         margin: 10,
     },
     buttonText: {
-        color: '#fff',
-        fontFamily: 'Calibri',
+        color: '#fff',       
+        fontFamily: 'trebuc',
         fontSize: 18,
     },
     contactList: {
@@ -58,7 +61,9 @@ export const Styles = StyleSheet.create({
     },
     listName: {
         flex: 1,
-        color: '#262626'
+        color: '#262626',
+        fontFamily: 'trebuc',
+        fontSize: 18
     },
     listButton: {
         flex: 1,
@@ -72,8 +77,10 @@ export const Styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         paddingBottom: 2,
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 'bold',
+        color: '#262626',
+        fontFamily: 'trebuc',
         backgroundColor: 'rgba(247,247,247,1.0)',
     },
     contactDisplay: {
@@ -95,19 +102,21 @@ export const Styles = StyleSheet.create({
         justifyContent: 'space-between',
         margin: 10
     },
-    contactKey: {
-        fontFamily: 'Calibri',
+    contactKey: {        
         fontSize: 18,
         fontWeight: 'bold',
         color: '#941a1d',
+        fontFamily: 'trebuc',
     },
-    contactValue: {
-        fontFamily: 'Calibri',
+    contactValue: {        
         fontSize: 18,
+        color: '#262626',
+        fontFamily: 'trebuc',
     },
-    contactInput: {
-        fontFamily: 'Calibri',
+    contactInput: {        
         fontSize: 18,
+        color: '#262626',
+        fontFamily: 'trebuc',
         backgroundColor: '#eee',
         borderRadius: 3,
         borderColor: '#262626',

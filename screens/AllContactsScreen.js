@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Button, Image, ImageBackground, TouchableOpacity, SectionList } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { Text, View, ActivityIndicator, ImageBackground, TouchableOpacity, SectionList } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { Styles } from '../Styles';
 
 export default function AllContactsView({ navigation }) {
     const [loading, setLoading] = useState(true);
     const [contactsData, setContactsData] = useState([]);
-    const [depts, setDepts] = useState([]);
+    const [depts, setDepts] = useState([]);    
 
     useFocusEffect(
         useCallback(() => {
@@ -19,7 +19,11 @@ export default function AllContactsView({ navigation }) {
                 })
                 .then((response) => response.json())
                 .then((json) => setContactsData(json.d))
-                .catch((error) => console.error(error));
+                .catch((error) => {
+                    console.log(error);
+                    alert('An error occurred when connecting to the server. Please try again. If error persists please contact the IT Department.');
+                    navigation.navigate('Home');
+                });
 
 
             fetch('http://localhost:55851/ContactsCRUD.asmx/GetDepartments',
@@ -31,7 +35,10 @@ export default function AllContactsView({ navigation }) {
                 })
                 .then((response) => response.json())
                 .then((json) => setDepts(json.d))
-                .catch((error) => console.error(error))
+                .catch(() => {
+                    alert('An error occurred when connecting to the server. Please try again. If error persists please contact the IT Department.')
+                    navigation.navigate('Home');
+                })
                 .finally(() => setLoading(false));
         }, [])
     );
@@ -40,7 +47,7 @@ export default function AllContactsView({ navigation }) {
         <View style={Styles.container}>
             <ImageBackground source={require('../assets/ROI_bg_charcoal.jpg')} style={Styles.header}>
                 <Text style={Styles.headerText}>All Contacts</Text>
-                <TouchableOpacity style={Styles.button} onPress={(e) => navigation.navigate('Home')}>
+                <TouchableOpacity style={Styles.button} onPress={() => navigation.navigate('Home')}>
                     <Text style={Styles.buttonText}>Home</Text>
                 </TouchableOpacity>
             </ImageBackground>
@@ -52,7 +59,7 @@ export default function AllContactsView({ navigation }) {
                         renderItem={({ item }) => (
                             <View style={Styles.listContact}>
                                 <Text style={Styles.listName}>{item.Name}</Text>
-                                <TouchableOpacity style={Styles.listButton} onPress={(e) => navigation.navigate('Contact', {
+                                <TouchableOpacity style={Styles.listButton} onPress={() => navigation.navigate('Contact', {
                                     person: item, depts: depts
                                 })}>
                                     <Text style={Styles.buttonText}>View/Update</Text>

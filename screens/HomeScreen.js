@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Button, ImageBackground, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Text, View, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { Styles } from '../Styles';
 
 export default function Home({ navigation }) {
@@ -10,10 +10,10 @@ export default function Home({ navigation }) {
                 <Text style={Styles.headerText}>Staff Contacts</Text>
             </ImageBackground>
             <View style={Styles.body}>
-                <TouchableOpacity style={Styles.button} onPress={(e) => navigation.navigate('AllContacts')}>
+                <TouchableOpacity style={Styles.button} onPress={() => navigation.navigate('AllContacts')}>
                     <Text style={Styles.buttonText}>View All Contacts</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={Styles.button} title="Add New Contact" onPress={(e) => navigation.navigate('NewContact')}>
+                <TouchableOpacity style={Styles.button} title="Add New Contact" onPress={() => navigation.navigate('NewContact')}>
                     <Text style={Styles.buttonText}>Add New Contact</Text>
                 </TouchableOpacity>
             </View>

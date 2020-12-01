@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native'
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Button, TextInput, Image, ImageBackground, TouchableOpacity, Picker } from 'react-native';
+import { Text, View, TextInput, ImageBackground, TouchableOpacity, Picker, ActivityIndicator } from 'react-native';
 import { Styles } from '../Styles'
 
 export default function NewContactView({ navigation }) {
+    const [loading, setLoading] = useState(true);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [dept, setDept] = useState(0);
@@ -15,7 +16,7 @@ export default function NewContactView({ navigation }) {
     const [depts, setDepts] = useState([]);
 
     useFocusEffect(
-        useCallback(() => {          
+        useCallback(() => {
             fetch('http://localhost:55851/ContactsCRUD.asmx/GetDepartments',
                 {
                     headers: {
@@ -25,7 +26,11 @@ export default function NewContactView({ navigation }) {
                 })
                 .then((response) => response.json())
                 .then((json) => setDepts(json.d))
-                .catch((error) => console.error(error))
+                .catch(() => {
+                    alert('An error occurred when connecting to the server. Please try again. If error persists please contact the IT Department.');
+                    navigation.navigate('Home');
+                })
+                .finally(() => setLoading(false));
         }, [])
     );
 
@@ -48,8 +53,9 @@ export default function NewContactView({ navigation }) {
                     'country': country
                 })
             })
-            .then((response) => alert('New staff contact details added successfully.'))
+            .then(() => alert('New staff contact details added successfully.'))
             .then(() => navigation.navigate('AllContacts'))
+            .catch(() => alert('An error occurred when connecting to the server. Please try again. If error persists please contact the IT Department.'));
     }
 
     const options = depts.map((d, i) => (<Picker.Item label={d} value={i} />));
@@ -60,53 +66,56 @@ export default function NewContactView({ navigation }) {
                 <Text style={Styles.headerText}>New Contact</Text>
             </ImageBackground>
             <View style={Styles.body}>
-                <View style={Styles.contactDisplay}>
-                    <View style={Styles.contactAttributeEdit}>
-                        <Text style={Styles.contactKey}>Name: </Text>
-                        <TextInput style={Styles.contactInput} value={name} placeholder="Name" onChangeText={(text) => setName(text)} />
-                    </View>
-                    <View style={Styles.contactAttributeEdit}>
-                        <Text style={Styles.contactKey}>Phone: </Text>
-                        <TextInput style={Styles.contactInput} value={phone} placeholder="Phone" onChangeText={(text) => setPhone(text)} />
-                    </View>
-                    <View style={Styles.contactAttributeEdit}>
-                        <Text style={Styles.contactKey}>Department: </Text>
-                        <Picker style={Styles.contactInput} selectedValue={dept} onValueChange={(itemValue, itemIndex) => setDept(itemValue)}>
-                            {options}
-                        </Picker>
-                    </View>
-                    <View style={Styles.contactAttributeEdit}>
-                        <Text style={Styles.contactKey}>Address</Text>
-                    </View>
-                    <View style={Styles.contactAttributeEdit}>
-                        <Text style={Styles.contactKey}>Street: </Text>
-                        <TextInput style={Styles.contactInput} value={street} placeholder="Street" onChangeText={(text) => setStreet(text)} />
-                    </View>
-                    <View style={Styles.contactAttributeEdit}>
-                        <Text style={Styles.contactKey}>City: </Text>
-                        <TextInput style={Styles.contactInput} value={city} placeholder="City" onChangeText={(text) => setCity(text)} />
-                    </View>
-                    <View style={Styles.contactAttributeEdit}>
-                        <Text style={Styles.contactKey}>State: </Text>
-                        <TextInput style={Styles.contactInput} value={state} placeholder="State" onChangeText={(text) => setState(text)} />
-                    </View>
-                    <View style={Styles.contactAttributeEdit}>
-                        <Text style={Styles.contactKey}>ZIP: </Text>
-                        <TextInput style={Styles.contactInput} value={zip} placeholder="ZIP" onChangeText={(text) => setZip(text)} />
-                    </View>
-                    <View style={Styles.contactAttributeEdit}>
-                        <Text style={Styles.contactKey}>Country: </Text>
-                        <TextInput style={Styles.contactInput} value={country} placeholder="Country" onChangeText={(text) => setCountry(text)} />
-                    </View>
-                </View>
-                <View style={Styles.footer}>
-                    <TouchableOpacity style={Styles.button} onPress={saveContact}>
-                        <Text style={Styles.buttonText}>Save</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={Styles.button} onPress={(e) => navigation.navigate('Home')}>
-                        <Text style={Styles.buttonText}>Cancel</Text>
-                    </TouchableOpacity>
-                </View>
+                {loading ? <ActivityIndicator /> : (
+                    <View>
+                        <View style={Styles.contactDisplay}>
+                            <View style={Styles.contactAttributeEdit}>
+                                <Text style={Styles.contactKey}>Name: </Text>
+                                <TextInput style={Styles.contactInput} value={name} placeholder="Name" onChangeText={(text) => setName(text)} />
+                            </View>
+                            <View style={Styles.contactAttributeEdit}>
+                                <Text style={Styles.contactKey}>Phone: </Text>
+                                <TextInput style={Styles.contactInput} value={phone} placeholder="Phone" onChangeText={(text) => setPhone(text)} />
+                            </View>
+                            <View style={Styles.contactAttributeEdit}>
+                                <Text style={Styles.contactKey}>Department: </Text>
+                                <Picker style={Styles.contactInput} selectedValue={dept} onValueChange={(itemValue) => setDept(itemValue)}>
+                                    {options}
+                                </Picker>
+                            </View>
+                            <View style={Styles.contactAttributeEdit}>
+                                <Text style={Styles.contactKey}>Address</Text>
+                            </View>
+                            <View style={Styles.contactAttributeEdit}>
+                                <Text style={Styles.contactKey}>Street: </Text>
+                                <TextInput style={Styles.contactInput} value={street} placeholder="Street" onChangeText={(text) => setStreet(text)} />
+                            </View>
+                            <View style={Styles.contactAttributeEdit}>
+                                <Text style={Styles.contactKey}>City: </Text>
+                                <TextInput style={Styles.contactInput} value={city} placeholder="City" onChangeText={(text) => setCity(text)} />
+                            </View>
+                            <View style={Styles.contactAttributeEdit}>
+                                <Text style={Styles.contactKey}>State: </Text>
+                                <TextInput style={Styles.contactInput} value={state} placeholder="State" onChangeText={(text) => setState(text)} />
+                            </View>
+                            <View style={Styles.contactAttributeEdit}>
+                                <Text style={Styles.contactKey}>ZIP: </Text>
+                                <TextInput style={Styles.contactInput} value={zip} placeholder="ZIP" onChangeText={(text) => setZip(text)} />
+                            </View>
+                            <View style={Styles.contactAttributeEdit}>
+                                <Text style={Styles.contactKey}>Country: </Text>
+                                <TextInput style={Styles.contactInput} value={country} placeholder="Country" onChangeText={(text) => setCountry(text)} />
+                            </View>
+                        </View>
+                        <View style={Styles.footer}>
+                            <TouchableOpacity style={Styles.button} onPress={saveContact}>
+                                <Text style={Styles.buttonText}>Save</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={Styles.button} onPress={() => navigation.navigate('Home')}>
+                                <Text style={Styles.buttonText}>Cancel</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>)}
             </View>
         </View>
 

@@ -1,8 +1,6 @@
-import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import AllContactsView from './screens/AllContactsScreen';
 import ContactView from './screens/ContactScreen';
 import DeleteContactView from './screens/DeleteContactScreen';

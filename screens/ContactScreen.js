@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Button, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import React from 'react';
+import { Text, View, TouchableOpacity, ImageBackground } from 'react-native';
 import { Styles } from '../Styles';
 
 export default function ContactView({ navigation, route }) {
@@ -9,7 +9,7 @@ export default function ContactView({ navigation, route }) {
         <View style={Styles.container}>
             <ImageBackground source={require('../assets/ROI_bg_charcoal.jpg')} style={Styles.header}>
                 <Text style={Styles.headerText}>Staff Details</Text>
-                <TouchableOpacity style={Styles.button} onPress={(e) => navigation.navigate('AllContacts')}>
+                <TouchableOpacity style={Styles.button} onPress={() => navigation.navigate('AllContacts')}>
                     <Text style={Styles.buttonText}>Back</Text>
                 </TouchableOpacity>
             </ImageBackground>
@@ -44,12 +44,12 @@ export default function ContactView({ navigation, route }) {
                     </View>
                 </View>
                 <View style={Styles.footer}>
-                    <TouchableOpacity style={Styles.button} onPress={(e) => navigation.navigate('EditContact', {
+                    <TouchableOpacity style={Styles.button} onPress={() => navigation.navigate('EditContact', {
                         person: person, depts: depts
                     })}>
                         <Text style={Styles.buttonText}>Edit</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={Styles.button} onPress={(e) => navigation.navigate('DeleteContact', {
+                    <TouchableOpacity style={Styles.button} onPress={() => navigation.navigate('DeleteContact', {
                         person: person, depts: depts
                     })}>
                         <Text style={Styles.buttonText}>Delete</Text>

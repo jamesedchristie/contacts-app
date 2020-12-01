@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Button, TextInput, Image, ImageBackground, TouchableOpacity, Picker } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, TextInput, ImageBackground, TouchableOpacity, Picker } from 'react-native';
 import { Styles } from '../Styles';
 
 export default function EditContactView({ navigation, route }) {
@@ -34,8 +34,9 @@ export default function EditContactView({ navigation, route }) {
                     'country': country
                 })
             })
-            .then((response) => alert('Staff contact details updated successfully.'))
+            .then(() => alert('Staff contact details updated successfully.'))
             .then(() => navigation.navigate('AllContacts'))
+            .catch(() => alert('An error occurred when connecting to the server. Please try again. If error persists please contact the IT Department.'));
     }
 
     return (
@@ -55,7 +56,7 @@ export default function EditContactView({ navigation, route }) {
                     </View>
                     <View style={Styles.contactAttributeEdit}>
                         <Text style={Styles.contactKey}>Department: </Text>
-                        <Picker style={Styles.contactInput} selectedValue={dept} onValueChange={(itemValue, itemIndex) => setDept(itemValue)}>
+                        <Picker style={Styles.contactInput} selectedValue={dept} onValueChange={(itemValue) => setDept(itemValue)}>
                             {options}
                         </Picker>
                     </View>
@@ -87,7 +88,7 @@ export default function EditContactView({ navigation, route }) {
                     <TouchableOpacity style={Styles.button} onPress={saveContact}>
                         <Text style={Styles.buttonText}>Save</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={Styles.button} onPress={(e) => navigation.navigate('Contact', { person: person, depts: depts })}>
+                    <TouchableOpacity style={Styles.button} onPress={() => navigation.navigate('Contact', { person: person, depts: depts })}>
                         <Text style={Styles.buttonText}>Cancel</Text>
                     </TouchableOpacity>
                 </View>
