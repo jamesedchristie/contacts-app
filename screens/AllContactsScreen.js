@@ -6,10 +6,21 @@ import { Styles } from '../Styles';
 export default function AllContactsView({ navigation }) {
     const [loading, setLoading] = useState(true);
     const [contactsData, setContactsData] = useState([]);
-    const [depts, setDepts] = useState([]);    
+    const [depts, setDepts] = useState([]);
+    //const [sortByName, setSortByName] = useState(false);
+    //const [sections, setSections] = useState(null);
 
     useFocusEffect(
         useCallback(() => {
+            // if (sortByName) {
+            //     setSections(contactsData.filter((value, index, self) => self.indexOf(value) == index)).map(c => ({
+            //         title: c, data: contactsData.filter(d => {
+            //             var lastName = d.Name.split(' ')[1];
+            //             return lastName.startsWith == c;
+            //         })
+            //     })
+            // }
+
             fetch('http://localhost:55851/ContactsCRUD.asmx/GetContacts',
                 {
                     headers: {
@@ -75,3 +86,69 @@ export default function AllContactsView({ navigation }) {
     );
 }
 
+function StaffByDept(props) {
+    const { depts, contactsData, navigation } = props;
+    return (
+        <SectionList
+            style={Styles.contactList}
+            sections={depts.map((d, i) => ({ title: d, data: contactsData.filter(c => c.Department == i) }))}
+            renderItem={({ item }) => (
+                <View style={Styles.listContact}>
+                    <Text style={Styles.listName}>{item.Name}</Text>
+                    <TouchableOpacity style={Styles.listButton} onPress={() => navigation.navigate('Contact', {
+                        person: item, depts: depts
+                    })}>
+                        <Text style={Styles.buttonText}>View/Update</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
+            renderSectionHeader={({ section }) => <Text style={Styles.sectionHeader}>{section.title}</Text>}
+            keyExtractor={(item, index) => index}
+        />
+    )
+}
+
+function StaffByName(props) {
+    const { depts, contactsData } = props;
+    const letters = contactsData.filter((value, index, self) => self.indexOf(value) == index);
+    return (
+        <SectionList
+            style={Styles.contactList}
+            sections={letters.map(c => ({
+                title: c, data: contactsData.filter(d => {
+                    var lastName = d.Name.split(' ')[1];
+                    return lastName.startsWith == c;
+                })
+            }))}
+            renderItem={({ item }) => (
+                <View style={Styles.listContact}>
+                    <Text style={Styles.listName}>{item.Name}</Text>
+                    <TouchableOpacity style={Styles.listButton} onPress={() => navigation.navigate('Contact', {
+                        person: item, depts: depts
+                    })}>
+                        <Text style={Styles.buttonText}>View/Update</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
+            renderSectionHeader={({ section }) => <Text style={Styles.sectionHeader}>{section.title}</Text>}
+            keyExtractor={(item, index) => index}
+        />
+    )
+}
+
+{/* <SectionList
+                        style={Styles.contactList}
+                        sections={depts.map((d, i) => ({ title: d, data: contactsData.filter(c => c.Department == i) }))}
+                        renderItem={({ item }) => (
+                            <View style={Styles.listContact}>
+                                <Text style={Styles.listName}>{item.Name}</Text>
+                                <TouchableOpacity style={Styles.listButton} onPress={() => navigation.navigate('Contact', {
+                                    person: item, depts: depts
+                                })}>
+                                    <Text style={Styles.buttonText}>View/Update</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                        renderSectionHeader={({ section }) => <Text style={Styles.sectionHeader}>{section.title}</Text>}
+                        keyExtractor={(item, index) => index}
+                    /> */}

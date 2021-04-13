@@ -26,7 +26,8 @@ export const Styles = StyleSheet.create({
         fontSize: 21,
     },
     body: {
-        padding: 50,
+        padding: 10,
+        paddingTop: 40,
         flex: 6,        
         alignSelf: 'stretch',
         alignItems: 'center',

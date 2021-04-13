@@ -67,7 +67,7 @@ export default function NewContactView({ navigation }) {
             </ImageBackground>
             <View style={Styles.body}>
                 {loading ? <ActivityIndicator /> : (
-                    <View>
+                    
                         <View style={Styles.contactDisplay}>
                             <View style={Styles.contactAttributeEdit}>
                                 <Text style={Styles.contactKey}>Name: </Text>
@@ -106,7 +106,7 @@ export default function NewContactView({ navigation }) {
                                 <Text style={Styles.contactKey}>Country: </Text>
                                 <TextInput style={Styles.contactInput} value={country} placeholder="Country" onChangeText={(text) => setCountry(text)} />
                             </View>
-                        </View>
+                        </View> )}
                         <View style={Styles.footer}>
                             <TouchableOpacity style={Styles.button} onPress={saveContact}>
                                 <Text style={Styles.buttonText}>Save</Text>
@@ -115,7 +115,7 @@ export default function NewContactView({ navigation }) {
                                 <Text style={Styles.buttonText}>Cancel</Text>
                             </TouchableOpacity>
                         </View>
-                    </View>)}
+                   
             </View>
         </View>
 
